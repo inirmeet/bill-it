@@ -1,4 +1,4 @@
-@extends('layouts.external')
+@extends('admin.layouts.external')
 @section('content')
 <div class="login-box">
     <div class="logo">
@@ -7,14 +7,24 @@
     </div>
     <div class="card">
         <div class="body">
-            <form id="sign_in" method="POST">
+            <form id="sign_in" method="POST" action="{{ url('admin/login') }}">
+              {{ csrf_field() }}
                 <div class="msg">Sign in to start your session</div>
+                @if ($errors->any())
+                  <div class="alert alert-danger">
+                      <ul>
+                          @foreach ($errors->all() as $error)
+                              <li>{{ $error }}</li>
+                          @endforeach
+                      </ul>
+                  </div>
+                @endif
                 <div class="input-group">
                     <span class="input-group-addon">
                         <i class="material-icons">person</i>
                     </span>
                     <div class="form-line">
-                        <input type="text" class="form-control" name="username" placeholder="Username" required autofocus>
+                        <input type="text" class="form-control" name="email" placeholder="Email" autofocus>
                     </div>
                 </div>
                 <div class="input-group">
@@ -22,7 +32,7 @@
                         <i class="material-icons">lock</i>
                     </span>
                     <div class="form-line">
-                        <input type="password" class="form-control" name="password" placeholder="Password" required>
+                        <input type="password" class="form-control" name="password" placeholder="Password">
                     </div>
                 </div>
                 <div class="row">
